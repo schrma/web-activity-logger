@@ -1,0 +1,49 @@
+[build-system]
+requires = [
+    "setuptools>=46.1.0",
+    "setuptools_scm[toml]>=5",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+version_scheme = "no-guess-dev"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--cov activity_logger --cov-report term-missing --cov-report html --verbose"
+norecursedirs = [
+    "dist",
+    "build",
+    ".tox",
+]
+testpaths = "tests"
+
+[tool.pylint."message control"]
+max-line-length = 119
+disable = [
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+]
+logging-format-style = "new"
+ignored-classes = "dataclasses.Field"
+
+[tool.flake8]
+exclude = [
+    ".tox",
+    "build",
+    "dist",
+    ".eggs",
+    "docs/conf.py",
+]
+max-line-length = 119
+extend-ignore = "E203,"
+
+[tool.black]
+line-length = 99
+target-version = [
+    "py38",
+]
+
+[tool.isort]
+profile = "black"

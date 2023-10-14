@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name  = "pypi"
+
+[packages]
+activity-logger = {editable = true, path = "."}
+
+[requires]
+python_version = "3.8"
+
+[dev-packages]
+sphinx-rtd-theme = "*"
+myst-parser = {version = "*", extras = ["linkify"]}
+twine = "*"
+sphinx = "*"
+build = {version = "*", extras = ["virtualenv"]}
+pytest  = "*"
+pytest-cov = "*"
+pytest-xdist = "*"
+atomicwrites = {version = "*", markers = "sys_platform == 'win32'"}
+pylint = "*"
+pyproject-flake8 = "*"
+black = "*"
+isort = "*"

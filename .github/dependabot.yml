@@ -1,0 +1,13 @@
+version: 2
+registries:
+  pypi-artifactory:
+    type: python-index
+    url: https://pypi.org/simple
+    replaces-base: true
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    registries: "*"
+    insecure-external-code-execution: allow
+    schedule:
+      interval: "daily"
