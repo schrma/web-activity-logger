@@ -29,6 +29,17 @@ This will automatically update your project environment with the necessary pytho
 If you are interested in further details, please read
 [this section](https://pages.github.hexagon.com/geo-surv/python-package-documentation/recommended-packages/virtual-environment/#pipenv).
 
+
+### Migrate (to create database.sqlite)
+
+```console
+set FLASK_APP=app.py
+flask db init
+flask db migrate -m "Initial migration."
+flask db upgrade
+```
+
+
 ### Workflows
 
 This project uses
