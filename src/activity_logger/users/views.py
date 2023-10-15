@@ -72,6 +72,7 @@ def account():
     if form.validate_on_submit():
         print(form)
         if form.picture.data:
+            print("Picture available")
             username = current_user.username
             pic = add_profile_pic(form.picture.data,username)
             current_user.profile_image = pic
@@ -80,6 +81,7 @@ def account():
         current_user.email = form.email.data
         db.session.commit()
         flash('User Account Updated')
+        print('User Account Updated')
         return redirect(url_for('users.account'))
 
     elif request.method == 'GET':
