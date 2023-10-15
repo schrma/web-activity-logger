@@ -33,7 +33,8 @@ If you are interested in further details, please read
 ### Migrate (to create database.sqlite)
 
 ```console
-set FLASK_APP=app.py
+set FLASK_APP=app.py // in Windows
+export FLASK_APP=app.py // in Linus
 flask db init
 flask db migrate -m "Initial migration."
 flask db upgrade
