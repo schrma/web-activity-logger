@@ -1,6 +1,6 @@
 import os
 # pip install pillow
-from PIL import Image
+#from PIL import Image
 
 from flask import url_for, current_app
 
@@ -17,8 +17,8 @@ def add_profile_pic(pic_upload,username):
     output_size = (200, 200)
 
     # Open the picture and save it
-    pic = Image.open(pic_upload)
-    pic.thumbnail(output_size)
-    pic.save(filepath)
+    #pic = Image.open(pic_upload)
+    #pic.thumbnail(output_size)
+    #pic.save(filepath)
 
     return storage_filename
