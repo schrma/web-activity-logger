@@ -7,4 +7,11 @@
     - https://docs.pytest.org/en/stable/writing_plugins.html
 """
 
-# import pytest
+import pytest
+import activity_logger.models
+
+
+@pytest.fixture(scope='module')
+def new_user():
+    user = activity_logger.models.User('one@one.com', 'one', 'secret_password')
+    return user

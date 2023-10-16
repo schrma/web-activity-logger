@@ -53,3 +53,4 @@ MANIFEST
 .conda*/
 src/migrations
 src/activity_logger/data.sqlite
+src/folder_db/*
