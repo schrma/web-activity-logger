@@ -1,5 +1,6 @@
 import os
 
+import activity_logger.users.views
 import sqlalchemy as sa
 from flask import Flask
 from flask_login import LoginManager
@@ -7,12 +8,11 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from models import User, BlogPost
+from activity_logger.models import User, BlogPost, db
 
 # Create the instances of the Flask extensions (flask-sqlalchemy, flask-login, etc.) in
 # the global scope, but without any arguments passed in.  These instances are not attached
 # to the application at this point.
-db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.login_view = "users.login"
 admin = Admin()
@@ -52,10 +52,10 @@ def register_blueprints(app):
     from activity_logger.blog_posts.views import blog_posts
     from activity_logger.core.views import core
     from activity_logger.error_pages.handlers import error_pages
-    from activity_logger.users.views import users
+    from activity_logger.users.views import users_blueprint
 
     # Register the apps
-    app.register_blueprint(users)
+    app.register_blueprint(users_blueprint)
     app.register_blueprint(blog_posts)
     app.register_blueprint(core)
     app.register_blueprint(error_pages)

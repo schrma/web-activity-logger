@@ -1,15 +1,15 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
-from activity_logger import db
-from werkzeug.security import generate_password_hash,check_password_hash
-from activity_logger.models import User, BlogPost
+from activity_logger.models import User, BlogPost, db
 from activity_logger.users.forms import RegistrationForm, LoginForm, UpdateUserForm
 from activity_logger.users.picture_handler import add_profile_pic
 
+users_blueprint = Blueprint('users', __name__)
 
-users = Blueprint('users', __name__)
+def marco():
+    pass
 
-@users.route('/register', methods=['GET', 'POST'])
+@users_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
 
@@ -24,9 +24,10 @@ def register():
         return redirect(url_for('users.login'))
     return render_template('register.html', form=form)
 
-@users.route('/login', methods=['GET', 'POST'])
-def login():
 
+@users_blueprint.route('/login', methods=['GET', 'POST'])
+def login():
+    printf("------------------------------------")
     form = LoginForm()
     if form.validate_on_submit():
         # Grab the user from our User Models table
@@ -37,7 +38,7 @@ def login():
         # https://stackoverflow.com/questions/2209755/python-operation-vs-is-not
 
         if user.check_password(form.password.data) and user is not None:
-            #Log in the user
+            # Log in the user
 
             login_user(user)
             flash('Logged in successfully.')
@@ -48,25 +49,22 @@ def login():
 
             # So let's now check if that next exists, otherwise we'll go to
             # the welcome page.
-            if next == None or not next[0]=='/':
+            if next == None or not next[0] == '/':
                 next = url_for('core.index')
 
             return redirect(next)
     return render_template('login.html', form=form)
 
 
-
-
-@users.route("/logout")
+@users_blueprint.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for('core.index'))
 
 
-@users.route("/account", methods=['GET', 'POST'])
+@users_blueprint.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
-
     form = UpdateUserForm()
 
     if form.validate_on_submit():
@@ -74,7 +72,7 @@ def account():
         if form.picture.data:
             print("Picture available")
             username = current_user.username
-            pic = add_profile_pic(form.picture.data,username)
+            pic = add_profile_pic(form.picture.data, username)
             current_user.profile_image = pic
 
         current_user.username = form.username.data
@@ -92,9 +90,15 @@ def account():
     return render_template('account.html', profile_image=profile_image, form=form)
 
 
-@users.route("/<username>")
+@users_blueprint.route("/test/<username>")
 def user_posts(username):
     page = request.args.get('page', 1, type=int)
     user = User.query.filter_by(username=username).first_or_404()
     blog_posts = BlogPost.query.filter_by(author=user).order_by(BlogPost.date.desc()).paginate(page=page, per_page=5)
     return render_template('user_blog_posts.html', blog_posts=blog_posts, user=user)
+
+
+@users_blueprint.route("/marco")
+def welcome():
+    print("Welcome")
+    return "<h1>Hello world</h1>"

@@ -21,6 +21,7 @@ def test___valid_login_logout___with_user___login_accepted(test_client, init_dat
     response = test_client.post('/login',
                                 data=dict(email='one@one.com', password='my_secret'),
                                 follow_redirects=True)
+    print(response.data)
     assert response.status_code == 200
 
     """
@@ -41,3 +42,12 @@ def test___valid_login_logout___with_incorrect_user___login_not_accepted(test_cl
                                 data=dict(email='one@one.com', password='my_secret'),
                                 follow_redirects=True)
     assert response.status_code == 200
+
+def test___valid_login_logout___with_incorrect_user___login_not_accepted(test_client):
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/login' page is posted to (POST)
+    THEN check the response is valid
+    """
+    response = test_client.get('/marco')
+    print(response.data)
