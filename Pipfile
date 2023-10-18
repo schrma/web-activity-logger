@@ -103,6 +103,7 @@ zipp = "==3.17.0"
 importlib-resources = "*"
 opencv-contrib-python = "*"
 numpy = "*"
+flask-admin = "*"
 
 [requires]
 python_version = "3.10"

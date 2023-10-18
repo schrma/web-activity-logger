@@ -1,7 +1,8 @@
-from activity_logger import db,login_manager
+from activity_logger import login_manager
 from datetime import datetime
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
+from flask_sqlalchemy import SQLAlchemy
 # By inheriting the UserMixin we get access to a lot of built-in attributes
 # which we will be able to call in our views!
 # is_authenticated()
@@ -13,9 +14,7 @@ from flask_login import UserMixin
 # The user_loader decorator allows flask-login to load the current user
 # and grab their id.
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
+db = SQLAlchemy()
 
 class User(db.Model, UserMixin):
 

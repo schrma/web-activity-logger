@@ -5,6 +5,9 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+from models import User, BlogPost
 
 # Create the instances of the Flask extensions (flask-sqlalchemy, flask-login, etc.) in
 # the global scope, but without any arguments passed in.  These instances are not attached
@@ -12,6 +15,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.login_view = "users.login"
+admin = Admin()
 
 def create_app():
     # Create the Flask application
@@ -35,6 +39,7 @@ def create_app():
     else:
         app.logger.info('Database already contains the users table.')
 
+    initialize_admin(app)
     return app
 
 def register_blueprints(app):
@@ -61,3 +66,12 @@ def initialize_extensions(app):
     db.init_app(app)
     Migrate(app,db)
     login_manager.init_app(app)
+
+def initialize_admin(app):
+    admin.init_app(app)
+    admin.add_view(ModelView(User, db.session))
+    admin.add_view(ModelView(BlogPost, db.session))
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
