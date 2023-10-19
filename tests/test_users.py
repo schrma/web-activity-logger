@@ -49,5 +49,7 @@ def test___valid_login_logout___with_incorrect_user___login_not_accepted(test_cl
     WHEN the '/login' page is posted to (POST)
     THEN check the response is valid
     """
-    response = test_client.get('/marco')
-    print(response.data)
+    response = test_client.post('/login',
+                                data=dict(email='one@one.com', password='false_secret'),
+                                follow_redirects=True)
+    assert response.status_code == 200

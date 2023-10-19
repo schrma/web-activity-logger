@@ -6,8 +6,6 @@ from activity_logger.users.picture_handler import add_profile_pic
 
 users_blueprint = Blueprint('users', __name__)
 
-def marco():
-    pass
 
 @users_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
@@ -27,7 +25,6 @@ def register():
 
 @users_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
-    printf("------------------------------------")
     form = LoginForm()
     if form.validate_on_submit():
         # Grab the user from our User Models table
