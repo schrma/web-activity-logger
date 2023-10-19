@@ -1,8 +1,9 @@
-import sys
 import os
-activate_this = '/home/websites/flask/web-activity-logger/.venv/bin/activate_this.py'
+import sys
+
+activate_this = "/home/websites/flask/web-activity-logger/.venv/bin/activate_this.py"
 exec(open(activate_this).read(), dict(__file__=activate_this))
-sys.path.insert(0,"/home/websites/flask/web-activity-logger/src")
+sys.path.insert(0, "/home/websites/flask/web-activity-logger/src")
 os.environ["FLASK_APP"] = "app.py"
 os.environ["PYTHONPATH"] = "/home/websites/flask/webpage/src/web-activity-logger"
-from activity_logger import app as application
+from activity_logger import app as application  # noqa: F401, F402, E402
