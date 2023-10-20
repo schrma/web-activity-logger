@@ -2,8 +2,9 @@ import os
 
 import pytest
 
-import activity_logger.models.org
+import activity_logger
 from activity_logger import create_app, db
+from activity_logger.models import build_default_database
 
 
 @pytest.fixture(scope="module")
@@ -30,29 +31,7 @@ def init_database(test_client):  # pylint: disable=redefined-outer-name, unused-
     # Create the database and the database table
     db.create_all()
 
-    admin_role = activity_logger.models.org.Role("Admin")
-    user_role = activity_logger.models.org.Role("User")
-
-    db.session.add(admin_role)
-    db.session.add(user_role)
-
-    db.session.commit()
-    # Insert user data
-    default_user = activity_logger.models.org.User(
-        username="one", email="one@one.com", password="my_secret"
-    )
-    second_user = activity_logger.models.org.User(
-        username="two", email="two@two.com", password="my_password"
-    )
-
-    default_user.role = admin_role
-    second_user.role = user_role
-
-    db.session.add(default_user)
-    db.session.add(second_user)
-
-    db.session.commit()
-    # Commit the changes for the users
+    build_default_database()
 
     yield  # this is where the testing happens!
 

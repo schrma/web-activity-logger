@@ -11,7 +11,7 @@ def test___view_login____just_page___correct_response(test_client):
 
 
 def test___valid_login_logout___with_user___login_accepted(
-    test_client, init_database
+    test_client,
 ):  # pylint: disable=unused-argument
     """
     GIVEN a Flask application configured for testing
@@ -29,7 +29,7 @@ def test___valid_login_logout___with_user___login_accepted(
 
 
 def test___valid_login_logout___with_incorrect_user___login_not_accepted(
-    test_client, init_database
+    test_client,
 ):  # pylint: disable=unused-argument
     """
     GIVEN a Flask application configured for testing
