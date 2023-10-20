@@ -26,6 +26,7 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f .ci/requirements.txt ]; then pip install -r .ci/requirements.txt; fi
         sudo apt-get install language-pack-de
+        cat src/activity_logger/users/picture_handler.py
     - name: Do stylecheck
       run: |
         tox -e stylecheck
