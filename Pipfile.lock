@@ -18,8 +18,7 @@
     "default": {
         "activity-logger": {
             "editable": true,
-            "git": "https://github.com/schrma/web-activity-logger.git",
-            "ref": "4219be86c450d5ac5f37e0c0897722b99ec9c78e"
+            "path": "."
         },
         "alabaster": {
             "hashes": [
