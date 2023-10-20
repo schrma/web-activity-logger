@@ -20,6 +20,7 @@ testpaths = "tests"
 
 [tool.pylint."message control"]
 max-line-length = 119
+ignore= "migrations"
 extension-pkg-whitelist= "cv2"
 generated-members = ["cv.*"]
 ignored-modules="cv2"
