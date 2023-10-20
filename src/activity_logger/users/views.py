@@ -1,7 +1,7 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 
-from activity_logger.models import BlogPost, User, db
+from activity_logger.models.org import BlogPost, User, db
 from activity_logger.users.forms import LoginForm, RegistrationForm, UpdateUserForm
 from activity_logger.users.picture_handler import add_profile_pic
 

@@ -6,7 +6,7 @@ from flask_wtf.file import FileAllowed, FileField
 from wtforms import PasswordField, StringField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, Email, EqualTo
 
-from activity_logger.models import User
+from activity_logger.models.org import User
 
 
 class LoginForm(FlaskForm):
