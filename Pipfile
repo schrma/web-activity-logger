@@ -98,11 +98,12 @@ uc-micro-py = "==1.0.2"
 urllib3 = "==2.0.6"
 virtualenv = "==20.24.5"
 werkzeug = "==2.3.7"
-wtforms = "==3.1.0"
+wtforms = "==3.0.1"
 zipp = "==3.17.0"
 importlib-resources = "*"
 opencv-contrib-python = "*"
 numpy = "*"
+flask-admin = "*"
 
 [requires]
 python_version = "3.10"
