@@ -31,8 +31,8 @@ def init_database(test_client):  # pylint: disable=redefined-outer-name, unused-
     # Create the database and the database table
     db.create_all()
 
-    admin_role = activity_logger.Role('Admin')
-    user_role = activity_logger.Role('User')
+    admin_role = activity_logger.Role("Admin")
+    user_role = activity_logger.Role("User")
 
     db.session.add(admin_role)
     db.session.add(user_role)
@@ -45,6 +45,10 @@ def init_database(test_client):  # pylint: disable=redefined-outer-name, unused-
     second_user = activity_logger.models.User(
         username="two", email="two@two.com", password="my_password"
     )
+
+    default_user.role = admin_role
+    second_user.role = user_role
+
     db.session.add(default_user)
     db.session.add(second_user)
 
