@@ -40,6 +40,11 @@ flask db migrate -m "Initial migration."
 flask db upgrade
 ```
 
+### Problems with write to readonly database
+
+```
+ sudo chown www-data:www-data -R .
+```
 
 ### Workflows
 
