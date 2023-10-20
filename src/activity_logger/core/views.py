@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request
 
-from activity_logger.models import BlogPost
+from activity_logger.models.org import BlogPost
 
 core = Blueprint("core", __name__)
 

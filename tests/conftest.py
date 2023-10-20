@@ -2,14 +2,13 @@ import os
 
 import pytest
 
-import activity_logger
-import activity_logger.models
+import activity_logger.models.org
 from activity_logger import create_app, db
 
 
 @pytest.fixture(scope="module")
 def new_user():
-    user = activity_logger.models.User("one@one.com", "one", "secret_password")
+    user = activity_logger.models.org.User("one@one.com", "one", "secret_password")
     return user
 
 
@@ -31,18 +30,18 @@ def init_database(test_client):  # pylint: disable=redefined-outer-name, unused-
     # Create the database and the database table
     db.create_all()
 
-    admin_role = activity_logger.Role("Admin")
-    user_role = activity_logger.Role("User")
+    admin_role = activity_logger.models.org.Role("Admin")
+    user_role = activity_logger.models.org.Role("User")
 
     db.session.add(admin_role)
     db.session.add(user_role)
 
     db.session.commit()
     # Insert user data
-    default_user = activity_logger.models.User(
+    default_user = activity_logger.models.org.User(
         username="one", email="one@one.com", password="my_secret"
     )
-    second_user = activity_logger.models.User(
+    second_user = activity_logger.models.org.User(
         username="two", email="two@two.com", password="my_password"
     )
 
