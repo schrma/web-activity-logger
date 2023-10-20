@@ -6,4 +6,5 @@ exec(open(activate_this).read(), dict(__file__=activate_this))
 sys.path.insert(0, "/home/websites/flask/web-activity-logger/src")
 os.environ["FLASK_APP"] = "app.py"
 os.environ["PYTHONPATH"] = "/home/websites/flask/webpage/src/web-activity-logger"
-from activity_logger import app as application  # noqa: F401, F402, E402
+from activity_logger import create_app
+application = create_app()
