@@ -43,7 +43,7 @@ def login():
 
             # If a user was trying to visit a page that requires a login
             # flask saves that URL as 'next'.
-            next = request.args.get("next") # pylint: disable=redefined-builtin
+            next = request.args.get("next")  # pylint: disable=redefined-builtin
 
             # So let's now check if that next exists, otherwise we'll go to
             # the welcome page.

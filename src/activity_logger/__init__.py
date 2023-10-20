@@ -46,10 +46,18 @@ def create_app():
 def register_blueprints(app):
     # Import these at the top if you want
     # We've imported them here for easy reference
-    from activity_logger.blog_posts.views import blog_posts # pylint: disable=(import-outside-toplevel
-    from activity_logger.core.views import core # pylint: disable=(import-outside-toplevel
-    from activity_logger.error_pages.handlers import error_pages # pylint: disable=(import-outside-toplevel
-    from activity_logger.users.views import users_blueprint # pylint: disable=(import-outside-toplevel
+    from activity_logger.blog_posts.views import (  # pylint: disable=import-outside-toplevel
+        blog_posts,
+    )
+    from activity_logger.core.views import (
+        core,  # pylint: disable=import-outside-toplevel
+    )
+    from activity_logger.error_pages.handlers import (  # pylint: disable=import-outside-toplevel
+        error_pages,
+    )
+    from activity_logger.users.views import (  # pylint: disable=import-outside-toplevel
+        users_blueprint,
+    )
 
     # Register the apps
     app.register_blueprint(users_blueprint)

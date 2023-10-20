@@ -43,7 +43,7 @@ class User(db.Model, UserMixin):
         return f"UserName: {self.username}"
 
 
-class BlogPost(db.Model): # pylint: disable=too-few-public-methods
+class BlogPost(db.Model):  # pylint: disable=too-few-public-methods
     # Setup the relationship to the User table
     users = db.relationship(User)
 

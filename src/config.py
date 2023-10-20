@@ -14,7 +14,7 @@ def create_folder_for_database_if_not_exists():
 create_folder_for_database_if_not_exists()
 
 
-class Config(): # pylint: disable=too-few-public-methods
+class Config:  # pylint: disable=too-few-public-methods
     FLASK_ENV = "development"
     DEBUG = False
     TESTING = False
@@ -30,15 +30,15 @@ class Config(): # pylint: disable=too-few-public-methods
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
-class ProductionConfig(Config): # pylint: disable=too-few-public-methods
+class ProductionConfig(Config):  # pylint: disable=too-few-public-methods
     FLASK_ENV = "production"
 
 
-class DevelopmentConfig(Config): # pylint: disable=too-few-public-methods
+class DevelopmentConfig(Config):  # pylint: disable=too-few-public-methods
     DEBUG = True
 
 
-class TestingConfig(Config): # pylint: disable=too-few-public-methods
+class TestingConfig(Config):  # pylint: disable=too-few-public-methods
     TESTING = True
     WTF_CSRF_ENABLED = False
     SQLALCHEMY_DATABASE_URI = os.getenv(
