@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "6861f39e22db3e01f10cd5d27cfb53fc5c0ae60f436663dc7c1ca10d0ec89c40"
+            "sha256": "040579430228ff79e0d23c7d5b142ff7e8a406ad5f2b0254b0d5e4fbee9de47a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -18,8 +18,7 @@
     "default": {
         "activity-logger": {
             "editable": true,
-            "git": "https://github.com/schrma/web-activity-logger.git",
-            "ref": "4219be86c450d5ac5f37e0c0897722b99ec9c78e"
+            "path": "."
         },
         "alabaster": {
             "hashes": [
@@ -1225,11 +1224,11 @@
         },
         "wtforms": {
             "hashes": [
-                "sha256:4edd15771630289a5fa343d58822f72749822ca5a39dd33f92ee917cf72b954b",
-                "sha256:addd7899004fdf9318eb711d33aae9c1973fe80378257b7383e06de2eff7c559"
+                "sha256:6b351bbb12dd58af57ffef05bc78425d08d1914e0fd68ee14143b7ade023c5bc",
+                "sha256:837f2f0e0ca79481b92884962b914eba4e72b7a2daaf1f939c890ed0124b834b"
             ],
             "index": "pypi",
-            "version": "==3.1.0"
+            "version": "==3.0.1"
         },
         "zipp": {
             "hashes": [

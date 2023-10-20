@@ -31,6 +31,13 @@ def init_database(test_client):  # pylint: disable=redefined-outer-name, unused-
     # Create the database and the database table
     db.create_all()
 
+    admin_role = activity_logger.Role('Admin')
+    user_role = activity_logger.Role('User')
+
+    db.session.add(admin_role)
+    db.session.add(user_role)
+
+    db.session.commit()
     # Insert user data
     default_user = activity_logger.models.User(
         username="one", email="one@one.com", password="my_secret"
@@ -41,8 +48,8 @@ def init_database(test_client):  # pylint: disable=redefined-outer-name, unused-
     db.session.add(default_user)
     db.session.add(second_user)
 
-    # Commit the changes for the users
     db.session.commit()
+    # Commit the changes for the users
 
     yield  # this is where the testing happens!
 

@@ -7,7 +7,7 @@ from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager
 from flask_migrate import Migrate
 
-from activity_logger.models import BlogPost, User, db
+from activity_logger.models import BlogPost, Role, RoleView, User, UserView, db
 
 # Create the instances of the Flask extensions (flask-sqlalchemy, flask-login, etc.) in
 # the global scope, but without any arguments passed in.  These instances are not attached
@@ -49,8 +49,8 @@ def register_blueprints(app):
     from activity_logger.blog_posts.views import (  # pylint: disable=import-outside-toplevel
         blog_posts,
     )
-    from activity_logger.core.views import (
-        core,  # pylint: disable=import-outside-toplevel
+    from activity_logger.core.views import (  # pylint: disable=import-outside-toplevel
+        core,
     )
     from activity_logger.error_pages.handlers import (  # pylint: disable=import-outside-toplevel
         error_pages,
@@ -76,7 +76,8 @@ def initialize_extensions(app):
 
 def initialize_admin(app):
     admin.init_app(app)
-    admin.add_view(ModelView(User, db.session))
+    admin.add_view(UserView(User, db.session))
+    admin.add_view(RoleView(Role, db.session))
     admin.add_view(ModelView(BlogPost, db.session))
 
 

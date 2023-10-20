@@ -4,7 +4,7 @@ verify_ssl = true
 name  = "pypi"
 
 [packages]
-activity-logger = {editable = true, ref = "4219be86c450d5ac5f37e0c0897722b99ec9c78e", git = "https://github.com/schrma/web-activity-logger.git"}
+activity-logger = {editable = true, path = "."}
 alabaster = "==0.7.13"
 alembic = "==1.12.0"
 astroid = "==3.0.0"
@@ -98,7 +98,7 @@ uc-micro-py = "==1.0.2"
 urllib3 = "==2.0.6"
 virtualenv = "==20.24.5"
 werkzeug = "==2.3.7"
-wtforms = "==3.1.0"
+wtforms = "==3.0.1"
 zipp = "==3.17.0"
 importlib-resources = "*"
 opencv-contrib-python = "*"
