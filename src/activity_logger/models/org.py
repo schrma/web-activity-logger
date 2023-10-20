@@ -90,3 +90,25 @@ class BlogPost(db.Model):  # pylint: disable=too-few-public-methods
 
     def __repr__(self):
         return f"Post Id: {self.id} --- Date: {self.date} --- Title: {self.title}"
+
+
+def init_user():
+    admin_role = Role("Admin")
+    user_role = Role("User")
+
+    db.session.add(admin_role)
+    db.session.add(user_role)
+
+    db.session.commit()
+    # Insert user data
+    default_user = User(username="one", email="one@one.com", password="my_secret")
+    second_user = User(username="two", email="two@two.com", password="my_password")
+
+    default_user.role = admin_role
+    second_user.role = user_role
+
+    db.session.add(default_user)
+    db.session.add(second_user)
+
+    db.session.commit()
+    # Commit the changes for the users
