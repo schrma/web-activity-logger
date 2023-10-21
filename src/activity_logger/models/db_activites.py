@@ -12,9 +12,23 @@ from activity_logger.models.org import db
 # is_anonymous()
 # get_id()
 
+class UnitTypeView(ModelView):
+    can_delete = False
+    form_columns = ["unit_type"]
+    column_list = ["unit_type"]
 
-# The user_loader decorator allows flask-login to load the current user
-# and grab their id.
+
+class UnitType(db.Model):  # pylint: disable=too-few-public-methods
+    __tablename__ = "unit_type"
+    id = db.Column(db.Integer, primary_key=True)
+    unit_type = db.Column(db.String(64), unique=True)
+    units = db.relationship("Activities", back_populates="my_unit")
+
+    def __init__(self, unit_type):
+        self.unit_type = unit_type
+
+    def __repr__(self):
+        return self.unit_type
 class ActivityTypeView(ModelView):
     can_delete = False
     form_columns = ["activity_type"]
@@ -23,8 +37,8 @@ class ActivityTypeView(ModelView):
 
 class ActivitiesView(ModelView):
     can_delete = False
-    form_columns = ["my_activity", "date", "value"]
-    column_list = ["my_activity", "date", "value"]
+    form_columns = ["my_activity", "date", "value", "my_unit"]
+    column_list = ["my_activity", "date", "value", "my_unit"]
 
 
 class ActivityType(db.Model):  # pylint: disable=too-few-public-methods
@@ -48,13 +62,16 @@ class Activities(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     my_activity_id = db.Column(db.ForeignKey("activity_type.id"), nullable=False)
     my_activity = db.relationship("ActivityType", back_populates="activities")
-    # my_activity = db.Column(db.String(20), nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     value = db.Column(db.Float, nullable=False)
+    my_unit_id = db.Column(db.ForeignKey("unit_type.id"), nullable=False)
+    my_unit = db.relationship("UnitType", back_populates="units")
 
-    def __init__(self, my_activity, value):
+
+    def __init__(self, my_activity, value, my_unit):
         self.value = value
         self.my_activity = my_activity
+        self.my_unit = my_unit
 
     def __repr__(self):
         return self.my_activity
@@ -63,16 +80,20 @@ class Activities(db.Model, UserMixin):
 def init_activities():
     jogging_type = ActivityType("Jogging")
     pushup_type = ActivityType("Pushup")
+    km_type = UnitType("km")
+    times_type = UnitType("X")
 
     db.session.add(jogging_type)
     db.session.add(pushup_type)
+    db.session.add(km_type)
+    db.session.add(times_type)
 
     db.session.commit()
 
-    first_run = Activities(jogging_type, value=11.11)
-    second_run = Activities(jogging_type, value=12.22)
-    first_pushup = Activities(pushup_type, value=13.33)
-    second_pushup = Activities(pushup_type, value=14.44)
+    first_run = Activities(my_activity=jogging_type, value=11.11, my_unit=km_type)
+    second_run = Activities(my_activity=jogging_type, value=12.22, my_unit=km_type)
+    first_pushup = Activities(my_activity=pushup_type, value=13.33, my_unit=times_type)
+    second_pushup = Activities(my_activity=pushup_type, value=14.44, my_unit=times_type)
 
     db.session.add(first_run)
     db.session.add(second_run)

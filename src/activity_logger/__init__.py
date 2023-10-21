@@ -13,6 +13,8 @@ from activity_logger.models.db_activites import (
     ActivitiesView,
     ActivityType,
     ActivityTypeView,
+    UnitType,
+    UnitTypeView
 )
 from activity_logger.models.org import BlogPost, Role, RoleView, User, UserView, db
 
@@ -89,6 +91,7 @@ def initialize_admin(app):
     admin.add_view(ModelView(BlogPost, db.session))
     admin.add_view(ActivityTypeView(ActivityType, db.session))
     admin.add_view(ActivitiesView(Activities, db.session))
+    admin.add_view(UnitTypeView(UnitType, db.session))
 
 
 @login_manager.user_loader
