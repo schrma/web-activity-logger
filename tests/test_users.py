@@ -40,3 +40,21 @@ def test___valid_login_logout___with_incorrect_user___login_not_accepted(
         "/login", data={"email": "one@one.com", "password": "false_secret"}, follow_redirects=True
     )
     assert response.status_code == 200
+
+
+def test___check_activitytype___default_values___correct_results(test_client):
+    response = test_client.get("/admin/activitytype/")
+    assert response.status_code == 200
+    assert b"Jogging" in response.data
+    assert b"Pushup" in response.data
+
+
+def test___check_activities___default_values___correct_results(test_client):
+    response = test_client.get("/admin/activities/")
+    assert response.status_code == 200
+    assert b"Jogging" in response.data
+    assert b"Pushup" in response.data
+    assert b"11.11" in response.data
+    assert b"12.22" in response.data
+    assert b"13.33" in response.data
+    assert b"14.44" in response.data

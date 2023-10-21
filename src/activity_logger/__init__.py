@@ -8,8 +8,13 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 
 from activity_logger.models import build_default_database
+from activity_logger.models.db_activites import (
+    Activities,
+    ActivitiesView,
+    ActivityType,
+    ActivityTypeView,
+)
 from activity_logger.models.org import BlogPost, Role, RoleView, User, UserView, db
-from activity_logger.models.db_activites import ActivityType, Activities, ActivityTypeView, ActivitiesView
 
 # Create the instances of the Flask extensions (flask-sqlalchemy, flask-login, etc.) in
 # the global scope, but without any arguments passed in.  These instances are not attached

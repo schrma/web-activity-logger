@@ -20,10 +20,12 @@ class ActivityTypeView(ModelView):
     form_columns = ["activity_type"]
     column_list = ["activity_type"]
 
+
 class ActivitiesView(ModelView):
     can_delete = False
     form_columns = ["my_activity", "date", "value"]
     column_list = ["my_activity", "date", "value"]
+
 
 class ActivityType(db.Model):  # pylint: disable=too-few-public-methods
     __tablename__ = "activity_type"
@@ -48,7 +50,7 @@ class Activities(db.Model, UserMixin):
     my_activity = db.relationship("ActivityType", back_populates="activities")
     # my_activity = db.Column(db.String(20), nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    value = db.Column(db.Integer, nullable=False)
+    value = db.Column(db.Float, nullable=False)
 
     def __init__(self, my_activity, value):
         self.value = value
@@ -56,6 +58,7 @@ class Activities(db.Model, UserMixin):
 
     def __repr__(self):
         return self.my_activity
+
 
 def init_activities():
     jogging_type = ActivityType("Jogging")
@@ -66,10 +69,10 @@ def init_activities():
 
     db.session.commit()
 
-    first_run = Activities(jogging_type, value=10)
-    second_run = Activities(jogging_type, value=15)
-    first_pushup = Activities(pushup_type, value=30)
-    second_pushup = Activities(pushup_type, value=34)
+    first_run = Activities(jogging_type, value=11.11)
+    second_run = Activities(jogging_type, value=12.22)
+    first_pushup = Activities(pushup_type, value=13.33)
+    second_pushup = Activities(pushup_type, value=14.44)
 
     db.session.add(first_run)
     db.session.add(second_run)
