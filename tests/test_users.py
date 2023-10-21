@@ -49,6 +49,14 @@ def test___check_activitytype___default_values___correct_results(test_client):
     assert b"Pushup" in response.data
 
 
+def test___check_units___default_values___correct_results(test_client):
+    response = test_client.get("/admin/unittype/")
+    assert response.status_code == 200
+    assert b"X" in response.data
+    assert b"km" in response.data
+    assert b"Unit Type" in response.data
+
+
 def test___check_activities___default_values___correct_results(test_client):
     response = test_client.get("/admin/activities/")
     assert response.status_code == 200
@@ -58,3 +66,7 @@ def test___check_activities___default_values___correct_results(test_client):
     assert b"12.22" in response.data
     assert b"13.33" in response.data
     assert b"14.44" in response.data
+    assert b"km" in response.data
+    assert b"X" in response.data
+    assert b"one" in response.data
+    assert b"two" in response.data

@@ -14,7 +14,7 @@ from activity_logger.models.db_activites import (
     ActivityType,
     ActivityTypeView,
     UnitType,
-    UnitTypeView
+    UnitTypeView,
 )
 from activity_logger.models.org import BlogPost, Role, RoleView, User, UserView, db
 

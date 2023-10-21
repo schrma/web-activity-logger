@@ -3,5 +3,5 @@ from activity_logger.models.org import init_user
 
 
 def build_default_database():
-    init_activities()
     init_user()
+    init_activities()

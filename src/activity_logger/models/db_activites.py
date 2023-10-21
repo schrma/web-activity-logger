@@ -3,7 +3,7 @@ from datetime import datetime
 from flask_admin.contrib.sqla import ModelView
 from flask_login import UserMixin
 
-from activity_logger.models.org import db
+from activity_logger.models.org import User, db
 
 # By inheriting the UserMixin we get access to a lot of built-in attributes
 # which we will be able to call in our views!
@@ -11,6 +11,7 @@ from activity_logger.models.org import db
 # is_active()
 # is_anonymous()
 # get_id()
+
 
 class UnitTypeView(ModelView):
     can_delete = False
@@ -29,6 +30,8 @@ class UnitType(db.Model):  # pylint: disable=too-few-public-methods
 
     def __repr__(self):
         return self.unit_type
+
+
 class ActivityTypeView(ModelView):
     can_delete = False
     form_columns = ["activity_type"]
@@ -37,8 +40,8 @@ class ActivityTypeView(ModelView):
 
 class ActivitiesView(ModelView):
     can_delete = False
-    form_columns = ["my_activity", "date", "value", "my_unit"]
-    column_list = ["my_activity", "date", "value", "my_unit"]
+    form_columns = ["my_user", "my_activity", "value", "my_unit", "date"]
+    column_list = ["my_user", "my_activity", "value", "my_unit", "date"]
 
 
 class ActivityType(db.Model):  # pylint: disable=too-few-public-methods
@@ -67,11 +70,14 @@ class Activities(db.Model, UserMixin):
     my_unit_id = db.Column(db.ForeignKey("unit_type.id"), nullable=False)
     my_unit = db.relationship("UnitType", back_populates="units")
 
+    my_user_id = db.Column(db.ForeignKey("users.id"), nullable=False)
+    my_user = db.relationship("User", back_populates="user_activities")
 
-    def __init__(self, my_activity, value, my_unit):
+    def __init__(self, my_activity, value, my_unit, my_user):
         self.value = value
         self.my_activity = my_activity
         self.my_unit = my_unit
+        self.my_user = my_user
 
     def __repr__(self):
         return self.my_activity
@@ -90,10 +96,21 @@ def init_activities():
 
     db.session.commit()
 
-    first_run = Activities(my_activity=jogging_type, value=11.11, my_unit=km_type)
-    second_run = Activities(my_activity=jogging_type, value=12.22, my_unit=km_type)
-    first_pushup = Activities(my_activity=pushup_type, value=13.33, my_unit=times_type)
-    second_pushup = Activities(my_activity=pushup_type, value=14.44, my_unit=times_type)
+    user_one = User.query.filter_by(username="one").first()
+    user_two = User.query.filter_by(username="two").first()
+
+    first_run = Activities(
+        my_activity=jogging_type, value=11.11, my_unit=km_type, my_user=user_one
+    )
+    second_run = Activities(
+        my_activity=jogging_type, value=12.22, my_unit=km_type, my_user=user_one
+    )
+    first_pushup = Activities(
+        my_activity=pushup_type, value=13.33, my_unit=times_type, my_user=user_two
+    )
+    second_pushup = Activities(
+        my_activity=pushup_type, value=14.44, my_unit=times_type, my_user=user_two
+    )
 
     db.session.add(first_run)
     db.session.add(second_run)

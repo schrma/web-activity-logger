@@ -55,6 +55,7 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(128))
     role_id = db.Column(db.ForeignKey("roles.id"), nullable=False)
     role = db.relationship("Role", back_populates="users")
+    user_activities = db.relationship("Activities", back_populates="my_user")
     # This connects BlogPosts to a User Author.
     posts = db.relationship("BlogPost", backref="author", lazy=True)
 
