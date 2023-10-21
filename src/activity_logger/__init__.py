@@ -8,8 +8,8 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 
 from activity_logger.models import build_default_database
-from activity_logger.models.db_activites import Activities, ActivityType
 from activity_logger.models.org import BlogPost, Role, RoleView, User, UserView, db
+from activity_logger.models.db_activites import ActivityType, Activities, ActivityTypeView, ActivitiesView
 
 # Create the instances of the Flask extensions (flask-sqlalchemy, flask-login, etc.) in
 # the global scope, but without any arguments passed in.  These instances are not attached
@@ -82,8 +82,8 @@ def initialize_admin(app):
     admin.add_view(UserView(User, db.session))
     admin.add_view(RoleView(Role, db.session))
     admin.add_view(ModelView(BlogPost, db.session))
-    admin.add_view(ModelView(ActivityType, db.session))
-    admin.add_view(ModelView(Activities, db.session))
+    admin.add_view(ActivityTypeView(ActivityType, db.session))
+    admin.add_view(ActivitiesView(Activities, db.session))
 
 
 @login_manager.user_loader
