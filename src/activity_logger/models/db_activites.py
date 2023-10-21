@@ -14,7 +14,7 @@ from activity_logger.models.org import User, db
 
 
 class UnitTypeView(ModelView):
-    can_delete = False
+    can_delete = True
     form_columns = ["unit_type"]
     column_list = ["unit_type"]
 
@@ -33,13 +33,13 @@ class UnitType(db.Model):  # pylint: disable=too-few-public-methods
 
 
 class ActivityTypeView(ModelView):
-    can_delete = False
+    can_delete = True
     form_columns = ["activity_type"]
     column_list = ["activity_type"]
 
 
 class ActivitiesView(ModelView):
-    can_delete = False
+    can_delete = True
     form_columns = ["my_user", "my_activity", "value", "my_unit", "date"]
     column_list = ["my_user", "my_activity", "value", "my_unit", "date"]
 
