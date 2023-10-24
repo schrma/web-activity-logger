@@ -2,7 +2,12 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 
 from activity_logger.models.org import BlogPost, User, db
-from activity_logger.users.forms import LoginForm, RegistrationForm, UpdateUserForm, ActivityForm
+from activity_logger.users.forms import (
+    ActivityForm,
+    LoginForm,
+    RegistrationForm,
+    UpdateUserForm,
+)
 from activity_logger.users.picture_handler import add_profile_pic
 
 users_blueprint = Blueprint("users", __name__)
@@ -99,8 +104,9 @@ def user_posts(username):
     )
     return render_template("user_blog_posts.html", blog_posts=blog_posts, user=user)
 
+
 # Define the route for the home page
-@users_blueprint.route('/activities', methods=['GET', 'POST'])
+@users_blueprint.route("/activities", methods=["GET", "POST"])
 def activities():
     # Create an instance of the form
     form = ActivityForm()
@@ -112,17 +118,20 @@ def activities():
         value = form.value.data
         unit = form.unit.data
         # Redirect to the result page with the data as query parameters
-        return redirect(url_for('users.result', activity=activity, time=time, value=value, unit=unit))
+        return redirect(
+            url_for("users.result", activity=activity, time=time, value=value, unit=unit)
+        )
     # Render the template with the form as an argument
-    return render_template('activities.html', form=form)
+    return render_template("activities.html", form=form)
+
 
 # Define the route for the result page
-@users_blueprint.route('/result',  methods=['GET', 'POST'])
+@users_blueprint.route("/result", methods=["GET", "POST"])
 def result():
     # Get the data from the query parameters
-    activity = request.args.get('activity')
-    time = request.args.get('time')
-    value = request.args.get('value')
-    unit = request.args.get('unit')
+    activity = request.args.get("activity")
+    time = request.args.get("time")
+    value = request.args.get("value")
+    unit = request.args.get("unit")
     # Render the template with the data as arguments
-    return render_template('result.html', activity=activity, time=time, value=value, unit=unit)
+    return render_template("result.html", activity=activity, time=time, value=value, unit=unit)
