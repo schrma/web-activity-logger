@@ -9,9 +9,17 @@ body{
     font-weight: 900;
     line-height: 1em;
   }
+  h2{
+    color: #502314;
+    font-size: 60px;
+  }
   h3, h4, h5, h6{
     font-weight: 700;
     line-height: 1.3em;
+  }
+  h6{
+    color: #502314;
+    font-size: 25px;
   }
   p{
     font-weight: 400;
@@ -20,6 +28,13 @@ body{
   img{
     max-width: 100%;
     height: auto;
+  }
+  .btn.btn-info{
+    background: #d62300;
+    border: 1px solid #d62300;
+    color: #fff;
+    border-radius: 25px;
+    padding: 12px 35px;
   }
 
   /*=============================
@@ -31,4 +46,18 @@ body{
   }
   #main_menu nav li{
     margin-left: 15px;
+  }
+
+/*=============================
+* Slider Area Style
+===============================*/
+#slider{
+    padding-top: 100px;
+  }
+
+  /*=============================
+  * About Area Style
+  ===============================*/
+  #about{
+    padding-top: 50px;
   }
