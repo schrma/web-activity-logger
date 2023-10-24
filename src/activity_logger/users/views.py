@@ -2,7 +2,7 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 
 from activity_logger.models.org import BlogPost, User, db
-from activity_logger.users.forms import LoginForm, RegistrationForm, UpdateUserForm
+from activity_logger.users.forms import LoginForm, RegistrationForm, UpdateUserForm, ActivityForm
 from activity_logger.users.picture_handler import add_profile_pic
 
 users_blueprint = Blueprint("users", __name__)
@@ -98,3 +98,31 @@ def user_posts(username):
         .paginate(page=page, per_page=5)
     )
     return render_template("user_blog_posts.html", blog_posts=blog_posts, user=user)
+
+# Define the route for the home page
+@users_blueprint.route('/activities', methods=['GET', 'POST'])
+def activities():
+    # Create an instance of the form
+    form = ActivityForm()
+    # Check if the form is validated on submission
+    if form.validate_on_submit():
+        # Get the data from the form fields
+        activity = form.activity.data
+        time = form.time.data
+        value = form.value.data
+        unit = form.unit.data
+        # Redirect to the result page with the data as query parameters
+        return redirect(url_for('users.result', activity=activity, time=time, value=value, unit=unit))
+    # Render the template with the form as an argument
+    return render_template('activities.html', form=form)
+
+# Define the route for the result page
+@users_blueprint.route('/result',  methods=['GET', 'POST'])
+def result():
+    # Get the data from the query parameters
+    activity = request.args.get('activity')
+    time = request.args.get('time')
+    value = request.args.get('value')
+    unit = request.args.get('unit')
+    # Render the template with the data as arguments
+    return render_template('result.html', activity=activity, time=time, value=value, unit=unit)

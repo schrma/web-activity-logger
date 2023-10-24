@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center">Flask-WTF Example</h1>
+    <p class="text-center">This is the result of your input.</p>
+    <!-- Display the data using the arguments passed from the route function -->
+    <div class="card">
+        <div class="card-body">
+            <p class="card-text">You chose {{ activity }} as your activity.</p>
+            <p class="card-text">You did your activity on {{ time }}.</p>
+            <p class="card-text">You entered {{ value }} {{ unit }} as your value.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

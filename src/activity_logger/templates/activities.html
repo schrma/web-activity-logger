@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center">Flask-WTF Example</h1>
+    <p class="text-center">This is a simple example of using Flask-WTF to create a form and get the user input.</p>
+    <!-- Display the form using the form argument -->
+    <form method="POST" class="row g-3">
+        {{ form.hidden_tag() }}
+        <div class="col-md-6">
+            <label for="{{ form.activity.id }}" class="form-label">{{ form.activity.label }}</label>
+            {{ form.activity(class="form-select") }}
+        </div>
+        <div class="col-md-6">
+            <label for="{{ form.time.id }}" class="form-label">{{ form.time.label }}</label>
+            {{ form.time(class="form-control") }}
+        </div>
+        <div class="col-md-6">
+            <label for="{{ form.value.id }}" class="form-label">{{ form.value.label }}</label>
+            {{ form.value(class="form-control") }}
+        </div>
+        <div class="col-md-6">
+            <label for="{{ form.unit.id }}" class="form-label">{{ form.unit.label }}</label>
+            {{ form.unit(class="form-select") }}
+        </div>
+        <div class="col-12">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
+{% endblock %}
