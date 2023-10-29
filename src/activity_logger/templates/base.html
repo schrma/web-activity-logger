@@ -10,45 +10,51 @@
 
 
     <link rel="stylesheet" href="static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+        integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
     <link rel="stylesheet" href="static/master.css">
     <meta charset="utf-8">
     <title></title>
 </head>
 
-<body>
-  <!-- Header Area -->
-  <header id="main_menu">
-    <nav class="navbar navbar-expand-md navbar-light fixed-top">
-      <div class="container">
-        <!-- Logo -->
-        <a href="" class="navbar-brand"><img src="static/logo.jpg" alt=""></a>
+<body data-bs-spy="scroll" data-bs-target=#main_menu>
+    <!-- Header Area -->
+    <header id="main_menu">
+        <nav class="navbar navbar-expand-md navbar-light fixed-top">
+            <div class="container">
+                <!-- Logo -->
+                <a href="" class="navbar-brand"><img src="static/logo.jpg" alt=""></a>
 
-        <!-- Mobile Menu Icon -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainmenu"><span
-            class="navbar-toggler-icon"></span></button>
+                <!-- Mobile Menu Icon -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainmenu"><span
+                        class="navbar-toggler-icon"></span></button>
 
-        <!-- Main Menu  -->
-        <div id="mainmenu" class="collapse navbar-collapse">
-          <ul class="navbar-nav ms-auto">
-            <li><a class="nav-link" href="{{ url_for('core.index') }}">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('users.login') }}">Log In</a></li>
-            <li class="nav-item"><a class="nav-link" href="./admin">Admin</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('users.activities') }}">Activities</a></li>
-            {% if current_user.is_authenticated %}
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('users.logout') }}">Log Out</a></li>
-            <li class="nav-item">
-                <a class="nav-link disabled"><i class="bi bi-person-circle"></i> {{ current_user.username }}</a>
-            </li>
-            {% else %}
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('users.register') }}">Register</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('users.login') }}">Log In</a></li>
-            {% endif %}
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </header>
+                <!-- Main Menu  -->
+                <div id="mainmenu" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ms-auto">
+                        <li><a class="nav-link" href="{{ url_for('core.index') }}">Home</a></li>
+                        <li><a class="nav-link" href="#about">About</a></li>
+                        <li><a class="nav-link" href="#contact">Contact us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('users.login') }}">Log In</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./admin">My Admin</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('users.activities') }}">Activities</a>
+                        </li>
+                        {% if current_user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('users.logout') }}">Log Out</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled"><i class="bi bi-person-circle"></i> {{ current_user.username
+                                }}</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('users.register') }}">Register</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('users.login') }}">Log In</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
 
     {% block content %}

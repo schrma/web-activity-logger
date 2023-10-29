@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <!-- Slider Area -->
-<section id="slider" class="carousel slide carousel-dark carousel-fade" data-bs-ride="carousel" data-bs-touch="true">
+<section id="slider" class="carousel slide carousel-dark carousel-fade" data-,cbs-ride="carousel" data-bs-touch="true">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#slider" data-bs-slide-to="0" class="active" aria-current="true"
             aria-label="Slide 1"></button>
@@ -29,7 +29,7 @@
 
 
 <!-- About Area -->
-<section id="about" class="pb-md-5 pb-3">
+<section id="about">
     <div class="container">
         <div class="row">
             <div class="col-md-6 align-self-center">
@@ -41,6 +41,35 @@
             </div>
             <div class="col-md-6">
                 <img src="img/about.jpg" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Area -->
+<section id="contact" class="pb-md-5 pb-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card p-4 text-center">
+                    <h2>Contact Us</h2>
+                    <p>If you have any suggestion, just write us!</p>
+                    <form action="" class="mt-3 text-start">
+                        <label for="" class="form-label">Your Name</label>
+                        <input type="em" name="" id="" placeholder="Enter Your Name" class="form-control mb-2">
+                        <label for="" class="form-label">Your Email</label>
+                        <input type="email" name="" id="" placeholder="Enter Your Email" class="form-control mb-2">
+                        <label for="" class="form-label">Your Phone</label>
+                        <input type="text" name="" id="" placeholder="Enter Your Phone Number"
+                            class="form-control mb-2">
+                        <label for="" class="form-label">Your Subject</label>
+                        <input type="text" name="" id="" placeholder="Enter Your Subject" class="form-control mb-2">
+                        <label for="" class="form-label">Your Message</label>
+                        <textarea name="" id="" cols="30" rows="10" placeholder="Enter your Message"
+                            class="form-control mb-2"></textarea>
+                        <input type="submit" value="Send Message" class="btn btn-info">
+                    </form>
+                </div>
             </div>
         </div>
     </div>
