@@ -1,6 +1,7 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 
+from activity_logger.models.db_activites import Activities, ActivityType, UnitType
 from activity_logger.models.org import BlogPost, User, db
 from activity_logger.users.forms import (
     ActivityForm,
@@ -9,7 +10,6 @@ from activity_logger.users.forms import (
     UpdateUserForm,
 )
 from activity_logger.users.picture_handler import add_profile_pic
-from activity_logger.models.db_activites import Activities, ActivityType, UnitType
 
 users_blueprint = Blueprint("users", __name__)
 
@@ -111,6 +111,12 @@ def user_posts(username):
 def activities():
     # Create an instance of the form
     form = ActivityForm()
+
+    form.activity.choices = [
+        (activity.id, activity.activity_type) for activity in ActivityType.query.all()
+    ]
+    form.unit.choices = [(unit.id, unit.unit_type) for unit in UnitType.query.all()]
+
     # Check if the form is validated on submission
     if form.validate_on_submit():
         # Get the data from the form fields
@@ -122,7 +128,9 @@ def activities():
         my_unit = UnitType.query.filter_by(id=unit).first()
         my_activity = ActivityType.query.filter_by(id=activity).first()
 
-        activity_to_save = Activities(my_activity=my_activity, value=value, my_unit=my_unit, my_user=current_user)
+        activity_to_save = Activities(
+            my_activity=my_activity, value=value, my_unit=my_unit, my_user=current_user
+        )
 
         db.session.add(activity_to_save)
         db.session.commit()

@@ -1,6 +1,7 @@
-from activity_logger import create_app
 from flask.cli import with_appcontext
-from activity_logger import build_default_database
+
+from activity_logger import create_app
+from activity_logger.models import build_default_database
 from activity_logger.models.org import db
 
 app = create_app()
@@ -8,6 +9,7 @@ app = create_app()
 if __name__ == "__main__":
     # app = create_app()
     app.run(debug=True)
+
 
 @app.cli.command("init-db")
 @with_appcontext

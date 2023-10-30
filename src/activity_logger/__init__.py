@@ -7,7 +7,6 @@ from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager
 from flask_migrate import Migrate
 
-from activity_logger.models import build_default_database
 from activity_logger.models.db_activites import (
     Activities,
     ActivitiesView,
@@ -41,7 +40,8 @@ def create_app():
     inspector = sa.inspect(engine)
     if not inspector.has_table("users"):
         app.logger.info("Use flask init-db")
-        return app
+        with app.app_context():
+            db.create_all()
     else:
         app.logger.info("Database already contains the users table.")
 

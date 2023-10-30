@@ -1,7 +1,6 @@
-from activity_logger.models.db_activites import ActivityType, UnitType, Activities
-from activity_logger.models.org import User
 from datetime import datetime
-from flask_login import current_user, login_required, login_user, logout_user
+
+from activity_logger.models.db_activites import Activities
 
 
 def test___view_login____just_page___correct_response(test_client):
@@ -17,7 +16,7 @@ def test___view_login____just_page___correct_response(test_client):
 
 
 def test___valid_login_logout___with_user___login_accepted(
-    test_client,
+    test_client, init_database
 ):  # pylint: disable=unused-argument
     """
     GIVEN a Flask application configured for testing
@@ -35,7 +34,7 @@ def test___valid_login_logout___with_user___login_accepted(
 
 
 def test___valid_login_logout___with_incorrect_user___login_not_accepted(
-    test_client,
+    test_client, init_database
 ):  # pylint: disable=unused-argument
     """
     GIVEN a Flask application configured for testing
@@ -48,14 +47,18 @@ def test___valid_login_logout___with_incorrect_user___login_not_accepted(
     assert response.status_code == 200
 
 
-def test___check_activitytype___default_values___correct_results(test_client):
+def test___check_activitytype___default_values___correct_results(
+    test_client, init_database
+):  # pylint: disable='unused-argument'
     response = test_client.get("/admin/activitytype/")
     assert response.status_code == 200
     assert b"Jogging" in response.data
     assert b"Pushup" in response.data
 
 
-def test___check_units___default_values___correct_results(test_client):
+def test___check_units___default_values___correct_results(
+    test_client, init_database
+):  # pylint: disable='unused-argument'
     response = test_client.get("/admin/unittype/")
     assert response.status_code == 200
     assert b"X" in response.data
@@ -63,7 +66,9 @@ def test___check_units___default_values___correct_results(test_client):
     assert b"Unit Type" in response.data
 
 
-def test___check_activities___default_values___correct_results(test_client):
+def test___check_activities___default_values___correct_results(
+    test_client, init_database
+):  # pylint: disable='unused-argument'
     response = test_client.get("/admin/activities/")
     assert response.status_code == 200
     assert b"Jogging" in response.data
@@ -77,22 +82,23 @@ def test___check_activities___default_values___correct_results(test_client):
     assert b"one" in response.data
     assert b"two" in response.data
 
-def test___check_add_activity___sport_entry___availble_in_database(test_client):
+
+def test___check_add_activity___sport_entry___availble_in_database(
+    test_client, init_database
+):  # pylint: disable='unused-argument'
     my_time = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S")
     my_value = 10
-    my_unit = (1, 'km')
-    my_activity = (1, 'Jogging')
-    USER_NAME = "test_user"
-
 
     test_client.post(
         "/login", data={"email": "one@one.com", "password": "my_secret"}, follow_redirects=True
     )
 
-    result_activity = Activities.query.filter(Activities.my_user.has(username='one')).all()
+    result_activity = Activities.query.filter(Activities.my_user.has(username="one")).all()
     assert len(result_activity) == 2
 
-    test_client.post("/activities", data={"activity" : 1, "time": my_time, "value": my_value, "unit": 1})
+    test_client.post(
+        "/activities", data={"activity": 1, "time": my_time, "value": my_value, "unit": 1}
+    )
 
-    result_activity = Activities.query.filter(Activities.my_user.has(username='one')).all()
+    result_activity = Activities.query.filter(Activities.my_user.has(username="one")).all()
     assert len(result_activity) == 3
