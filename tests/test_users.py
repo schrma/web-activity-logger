@@ -1,3 +1,9 @@
+from activity_logger.models.db_activites import ActivityType, UnitType, Activities
+from activity_logger.models.org import User
+from datetime import datetime
+from flask_login import current_user, login_required, login_user, logout_user
+
+
 def test___view_login____just_page___correct_response(test_client):
     """
     GIVEN a Flask application configured for testing
@@ -70,3 +76,18 @@ def test___check_activities___default_values___correct_results(test_client):
     assert b"X" in response.data
     assert b"one" in response.data
     assert b"two" in response.data
+
+def test___check_add_activity___sport_entry___availble_in_database(test_client):
+    my_time = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S")
+    my_value = 10
+    my_unit = UnitType("km")
+    USER_NAME = "test_user"
+
+
+    user = User(username=USER_NAME, email="one@one.com", password="my_secret")
+    test_client.post(
+        "/login", data={"email": "one@one.com", "password": "my_secret"}, follow_redirects=True
+    )
+    test_client.post("/activities", data={"activity" : 'running', "time": my_time, "value": my_value, "unit": "km"})
+
+    result_activity = Activities.query.filter(Activities.my_user.has(username=USER_NAME)).first()

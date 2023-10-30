@@ -9,6 +9,7 @@ from activity_logger.users.forms import (
     UpdateUserForm,
 )
 from activity_logger.users.picture_handler import add_profile_pic
+from activity_logger.models.db_activites import Activities, ActivityType, UnitType
 
 users_blueprint = Blueprint("users", __name__)
 
@@ -117,6 +118,14 @@ def activities():
         time = form.time.data
         value = form.value.data
         unit = form.unit.data
+
+        my_unit = UnitType.query.filter_by(unit_type=unit).first()
+        my_activity = ActivityType.query.filter_by(activity_type=activity)
+
+        activity_to_save = Activities(my_activity=ActivityType('running'), value=value, my_unit=my_unit, my_user=current_user)
+
+        db.session.add(activity_to_save)
+        db.session.commit()
         # Redirect to the result page with the data as query parameters
         return redirect(
             url_for("users.result", activity=activity, time=time, value=value, unit=unit)
