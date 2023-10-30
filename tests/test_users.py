@@ -80,14 +80,19 @@ def test___check_activities___default_values___correct_results(test_client):
 def test___check_add_activity___sport_entry___availble_in_database(test_client):
     my_time = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S")
     my_value = 10
-    my_unit = UnitType("km")
+    my_unit = (1, 'km')
+    my_activity = (1, 'Jogging')
     USER_NAME = "test_user"
 
 
-    user = User(username=USER_NAME, email="one@one.com", password="my_secret")
     test_client.post(
         "/login", data={"email": "one@one.com", "password": "my_secret"}, follow_redirects=True
     )
-    test_client.post("/activities", data={"activity" : 'running', "time": my_time, "value": my_value, "unit": "km"})
 
-    result_activity = Activities.query.filter(Activities.my_user.has(username=USER_NAME)).first()
+    result_activity = Activities.query.filter(Activities.my_user.has(username='one')).all()
+    assert len(result_activity) == 2
+
+    test_client.post("/activities", data={"activity" : 1, "time": my_time, "value": my_value, "unit": 1})
+
+    result_activity = Activities.query.filter(Activities.my_user.has(username='one')).all()
+    assert len(result_activity) == 3

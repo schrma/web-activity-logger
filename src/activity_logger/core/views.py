@@ -23,3 +23,5 @@ def info():
     contact page. Any page that doesn't really sync with one of the models.
     """
     return render_template("info.html")
+
+

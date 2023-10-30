@@ -119,10 +119,10 @@ def activities():
         value = form.value.data
         unit = form.unit.data
 
-        my_unit = UnitType.query.filter_by(unit_type=unit).first()
-        my_activity = ActivityType.query.filter_by(activity_type=activity)
+        my_unit = UnitType.query.filter_by(id=unit).first()
+        my_activity = ActivityType.query.filter_by(id=activity).first()
 
-        activity_to_save = Activities(my_activity=ActivityType('running'), value=value, my_unit=my_unit, my_user=current_user)
+        activity_to_save = Activities(my_activity=my_activity, value=value, my_unit=my_unit, my_user=current_user)
 
         db.session.add(activity_to_save)
         db.session.commit()

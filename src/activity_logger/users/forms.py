@@ -15,6 +15,7 @@ from wtforms import (
 from wtforms.validators import DataRequired, Email, EqualTo
 
 from activity_logger.models.org import User
+from activity_logger.models.db_activites import ActivityType, UnitType
 
 
 class LoginForm(FlaskForm):
@@ -62,15 +63,14 @@ class UpdateUserForm(FlaskForm):
             raise ValidationError("This username is taken.")
 
 
-# Define the activities and units choices for the dropdown menus
-activities = [("running", "Running"), ("cycling", "Cycling"), ("swimming", "Swimming")]
-units = [("km", "Kilometers"), ("mi", "Miles"), ("m", "Meters")]
-
-
 # Create a Flask-WTF form class
 class ActivityForm(FlaskForm):
+
+    activity_choices = [(activity.id, activity.activity_type) for activity in ActivityType.query.all()]
+    unit_choices =  [(unit.id, unit.unit_type) for unit in UnitType.query.all()]
+
     # Dropdown menu with activities
-    activity = SelectField("Choose an activity", choices=activities, validators=[DataRequired()])
+    activity = SelectField("Choose an activity", choices=activity_choices, validators=[DataRequired()])
     # Box to select time and date
     time = DateTimeLocalField(
         "Enter the time and date of your activity",
@@ -82,6 +82,6 @@ class ActivityForm(FlaskForm):
         "Enter the distance or duration of your activity", validators=[DataRequired()]
     )
     # Dropdown menu with different units
-    unit = SelectField("Choose the unit of your value", choices=units, validators=[DataRequired()])
+    unit = SelectField("Choose the unit of your value", choices=unit_choices, validators=[DataRequired()])
     # Submit button
     submit = SubmitField("Submit")

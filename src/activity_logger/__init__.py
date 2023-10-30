@@ -35,20 +35,18 @@ def create_app():
     app.config.from_object(config_type)
 
     initialize_extensions(app)
-    register_blueprints(app)
 
     # Check if the database needs to be initialized
     engine = sa.create_engine(app.config["SQLALCHEMY_DATABASE_URI"])
     inspector = sa.inspect(engine)
     if not inspector.has_table("users"):
-        with app.app_context():
-            db.drop_all()
-            db.create_all()
-            build_default_database()
-            app.logger.info("Initialized the database!")
+        app.logger.info("Use flask init-db")
+        return app
     else:
         app.logger.info("Database already contains the users table.")
 
+    with app.app_context():
+        register_blueprints(app)
     initialize_admin(app)
     return app
 
