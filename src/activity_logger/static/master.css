@@ -59,7 +59,7 @@ img {
 /*=============================
 * Slider Area Style
 ===============================*/
-#slider {
+#first_section {
     padding-top: 100px;
     padding-bottom: 200px;
 }
@@ -91,7 +91,7 @@ img {
     #main_menu img {
         width: 200px;
     }
-    #slider {
+    #first_section {
         padding-top: 65px;
     }
     #about,
