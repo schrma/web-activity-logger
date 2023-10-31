@@ -28,7 +28,11 @@ pipenv sync
 This will automatically update your project environment with the necessary python packages.
 If you are interested in further details, please read
 [this section](https://pages.github.hexagon.com/geo-surv/python-package-documentation/recommended-packages/virtual-environment/#pipenv).
+### Create default database
 
+```
+flask init-db
+```
 
 ### Migrate (to create database.sqlite)
 

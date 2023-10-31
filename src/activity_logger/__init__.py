@@ -7,7 +7,6 @@ from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager
 from flask_migrate import Migrate
 
-from activity_logger.models import build_default_database
 from activity_logger.models.db_activites import (
     Activities,
     ActivitiesView,
@@ -35,20 +34,19 @@ def create_app():
     app.config.from_object(config_type)
 
     initialize_extensions(app)
-    register_blueprints(app)
 
     # Check if the database needs to be initialized
     engine = sa.create_engine(app.config["SQLALCHEMY_DATABASE_URI"])
     inspector = sa.inspect(engine)
     if not inspector.has_table("users"):
+        app.logger.info("Use flask init-db")
         with app.app_context():
-            db.drop_all()
             db.create_all()
-            build_default_database()
-            app.logger.info("Initialized the database!")
     else:
         app.logger.info("Database already contains the users table.")
 
+    with app.app_context():
+        register_blueprints(app)
     initialize_admin(app)
     return app
 

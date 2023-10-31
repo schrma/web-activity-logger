@@ -29,8 +29,8 @@ def test_client():
 @pytest.fixture(scope="module")
 def init_database(test_client):  # pylint: disable=redefined-outer-name, unused-argument
     # Create the database and the database table
+    db.drop_all()
     db.create_all()
-
     build_default_database()
 
     yield  # this is where the testing happens!
