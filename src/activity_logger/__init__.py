@@ -23,11 +23,18 @@ from activity_logger.models.org import BlogPost, Role, RoleView, User, UserView,
 login_manager = LoginManager()
 login_manager.login_view = "users.login"
 admin = Admin()
+# dash_app = None
 
 
 def create_app():
+    # global dash_app
     # Create the Flask application
     app = Flask(__name__)
+
+    # Import Dash application
+    from .dashboard import init_dashboard  # pylint: disable=import-outside-toplevel
+
+    app = init_dashboard(app)
 
     # Configure the Flask application
     config_type = os.getenv("CONFIG_TYPE", default="config.DevelopmentConfig")
