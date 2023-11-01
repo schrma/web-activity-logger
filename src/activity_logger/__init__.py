@@ -16,6 +16,7 @@ from activity_logger.models.db_activites import (
     UnitTypeView,
 )
 from activity_logger.models.org import BlogPost, Role, RoleView, User, UserView, db
+from activity_logger.dashboard.dash_plot import create_callbacks
 
 # Create the instances of the Flask extensions (flask-sqlalchemy, flask-login, etc.) in
 # the global scope, but without any arguments passed in.  These instances are not attached
@@ -35,6 +36,8 @@ def create_app():
     from .dashboard import init_dashboard  # pylint: disable=import-outside-toplevel
 
     app = init_dashboard(app)
+
+
 
     # Configure the Flask application
     config_type = os.getenv("CONFIG_TYPE", default="config.DevelopmentConfig")

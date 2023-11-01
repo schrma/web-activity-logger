@@ -3,6 +3,9 @@ import dash
 from dash import dcc, html
 from flask import Flask
 
+from activity_logger.dashboard.dash_plot import create_callbacks
+from activity_logger.models.db_activites import Activities
+
 # from .layout import html_layout
 
 
@@ -25,6 +28,10 @@ def init_dashboard(app: Flask):
     # dash_module.index_string = html_layout
 
     # Create Layout
-    dash_module.layout = html.H1("Hello world!")
+    dash_module.layout = html.Div([
+        html.H1("Dashboard"),
+        dcc.Graph(id='item-graph'),])
+
+    create_callbacks(dash_module, Activities)
 
     return dash_module.server
