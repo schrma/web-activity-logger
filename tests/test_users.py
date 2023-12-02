@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from activity_logger.models.db_activites import Activities
+from activity_logger.models.org import User
 
 
 def test___view_login____just_page___correct_response(test_client):
@@ -33,7 +34,37 @@ def test___valid_login_logout___with_user___login_accepted(
     assert response.status_code == 200
 
 
-def test___valid_login_logout___with_incorrect_user___login_not_accepted(
+def test___login___with_user_not_available___login_not_accepted(
+    test_client, init_database
+):  # pylint: disable=unused-argument
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/login' page is posted to (POST)
+    THEN check the response is valid
+    """
+    response = test_client.post(
+        "/login", data={"email": "one1@one.com", "password": "false_secret"}, follow_redirects=True
+    )
+
+    assert b"User is not available" in response.data
+
+
+def test___login___correct_input___login_accepted(
+    test_client, init_database
+):  # pylint: disable=unused-argument
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/login' page is posted to (POST)
+    THEN check the response is valid
+    """
+    response = test_client.post(
+        "/login", data={"email": "one@one.com", "password": "my_secret"}, follow_redirects=True
+    )
+
+    assert b"Logged in successfully." in response.data
+
+
+def test___valid_login_logout___with_false_password___login_not_accepted(
     test_client, init_database
 ):  # pylint: disable=unused-argument
     """
@@ -44,7 +75,8 @@ def test___valid_login_logout___with_incorrect_user___login_not_accepted(
     response = test_client.post(
         "/login", data={"email": "one@one.com", "password": "false_secret"}, follow_redirects=True
     )
-    assert response.status_code == 200
+
+    assert b"Password is not correct" in response.data
 
 
 def test___check_activitytype___default_values___correct_results(
@@ -102,3 +134,20 @@ def test___check_add_activity___sport_entry___availble_in_database(
 
     result_activity = Activities.query.filter(Activities.my_user.has(username="one")).all()
     assert len(result_activity) == 3
+
+
+def test___register___default_person___default_person_is_in_database(
+    test_client, init_database
+):  # pylint: disable='unused-argument'
+    test_client.post(
+        "/register",
+        data={
+            "email": "my@my.com",
+            "username": "my",
+            "password": "my_secret",
+            "pass_confirm": "my_secret",
+        },
+        follow_redirects=True,
+    )
+
+    assert User.query.filter_by(username="my").first()

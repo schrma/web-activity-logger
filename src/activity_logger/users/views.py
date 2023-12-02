@@ -2,7 +2,7 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 
 from activity_logger.models.db_activites import Activities, ActivityType, UnitType
-from activity_logger.models.org import BlogPost, User, db
+from activity_logger.models.org import BlogPost, Role, User, db
 from activity_logger.users.forms import (
     ActivityForm,
     LoginForm,
@@ -22,11 +22,14 @@ def register():
         user = User(
             email=form.email.data, username=form.username.data, password=form.password.data
         )
-
+        user.role = Role.query.filter_by(role="Admin").first()
         db.session.add(user)
         db.session.commit()
         flash("Thanks for registering! Now you can login!")
         return redirect(url_for("users.login"))
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(f'Error in field "{getattr(form, field).label.text}": {error}', "error")
     return render_template("register.html", form=form)
 
 
@@ -37,26 +40,33 @@ def login():
         # Grab the user from our User Models table
         user = User.query.filter_by(email=form.email.data).first()
 
-        # Check that the user was supplied and the password is right
-        # The verify_password method comes from the User object
-        # https://stackoverflow.com/questions/2209755/python-operation-vs-is-not
+        if user is None:
+            flash("User is not available", "error")
+            return render_template("login.html", form=form)
 
-        if user.check_password(form.password.data) and user is not None:
-            # Log in the user
+        if not user.check_password(form.password.data):
+            flash("Password is not correct", "error")
+            return render_template("login.html", form=form)
 
-            login_user(user)
-            flash("Logged in successfully.")
+        # Log in the user
 
-            # If a user was trying to visit a page that requires a login
-            # flask saves that URL as 'next'.
-            next = request.args.get("next")  # pylint: disable=redefined-builtin
+        login_user(user)
+        flash("Logged in successfully.")
 
-            # So let's now check if that next exists, otherwise we'll go to
-            # the welcome page.
-            if next is None or not next[0] == "/":
-                next = url_for("core.index")
+        # If a user was trying to visit a page that requires a login
+        # flask saves that URL as 'next'.
+        next = request.args.get("next")  # pylint: disable=redefined-builtin
 
-            return redirect(next)
+        # So let's now check if that next exists, otherwise we'll go to
+        # the welcome page.
+        if next is None or not next[0] == "/":
+            next = url_for("core.index")
+
+        return redirect(next)
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(f'Error in field "{getattr(form, field).label.text}": {error}', "error")
+
     return render_template("login.html", form=form)
 
 
@@ -152,3 +162,11 @@ def result():
     unit = request.args.get("unit")
     # Render the template with the data as arguments
     return render_template("result.html", activity=activity, time=time, value=value, unit=unit)
+
+
+@users_blueprint.route("/flash", methods=["GET", "POST"])
+def my_flash():
+    # Defined in base.html (Flash)
+    flash("Should be an error", "error")
+    flash("Should be an info")
+    return redirect(url_for("core.index"))
