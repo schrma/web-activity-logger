@@ -146,8 +146,12 @@ def test___register___default_person___default_person_is_in_database(
             "username": "my",
             "password": "my_secret",
             "pass_confirm": "my_secret",
+            "role": 2,
         },
         follow_redirects=True,
     )
 
-    assert User.query.filter_by(username="my").first()
+    user_from_db = User.query.filter_by(username="my").first()
+
+    assert user_from_db
+    assert str(user_from_db.role) == "User"

@@ -18,11 +18,14 @@ users_blueprint = Blueprint("users", __name__)
 def register():
     form = RegistrationForm()
 
+    form.role.choices = [(role.id, role.role) for role in Role.query.all()]
+
     if form.validate_on_submit():
         user = User(
             email=form.email.data, username=form.username.data, password=form.password.data
         )
-        user.role = Role.query.filter_by(role="Admin").first()
+        # user.role = Role.query.filter_by(role="Admin").first()
+        user.role = Role.query.filter_by(id=form.role.data).first()
         db.session.add(user)
         db.session.commit()
         flash("Thanks for registering! Now you can login!")
