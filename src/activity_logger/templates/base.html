@@ -35,7 +35,7 @@
                         <li><a class="nav-link" href="{{ url_for('core.index') }}">Home</a></li>
                         <li><a class="nav-link" href="#about">About</a></li>
                         <li><a class="nav-link" href="#contact">Contact us</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('users.login') }}">Log In</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('core.dash') }}">Dash</a></li>
                         <li class="nav-item"><a class="nav-link" href="./admin">My Admin</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('users.activities') }}">Activities</a>
                         </li>
@@ -56,6 +56,31 @@
         </nav>
     </header>
 
+    <!-- ************************************* -->
+    <!-- Flash -->
+    <!-- ************************************* -->
+
+    <div class="section" id="first_section">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul>
+            {% for category, message in messages %}
+            <div class="col-md-8 offset-md-2">
+                {% if category == 'error' %}
+                <div class="alert alert-danger" role="alert">
+                    <li class="list-group-item">{{ message }}</li>
+                </div>
+                {% else %}
+                <div class="alert alert-dark" role="alert">
+                    <li class="list-group-item">{{ message }}</li>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    </div>
 
     {% block content %}
 

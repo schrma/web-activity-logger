@@ -39,7 +39,7 @@ class Role(db.Model):  # pylint: disable=too-few-public-methods
 
 
 class UserView(ModelView):
-    can_delete = False
+    can_delete = True
     form_columns = ["username", "email", "role"]
     column_list = ["username", "email", "role"]
 

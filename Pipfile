@@ -104,6 +104,7 @@ importlib-resources = "*"
 opencv-contrib-python = "*"
 numpy = "*"
 flask-admin = "*"
+dash = "*"
 
 [requires]
 python_version = "3.10"

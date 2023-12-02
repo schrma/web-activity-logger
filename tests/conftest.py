@@ -7,13 +7,13 @@ from activity_logger import create_app, db
 from activity_logger.models import build_default_database
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="package")
 def new_user():
     user = activity_logger.models.org.User("one@one.com", "one", "secret_password")
     return user
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="package")
 def test_client():
     # Set the Testing configuration prior to creating the Flask application
     os.environ["CONFIG_TYPE"] = "config.TestingConfig"
@@ -26,7 +26,7 @@ def test_client():
             yield testing_client  # this is where the testing happens!
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="package")
 def init_database(test_client):  # pylint: disable=redefined-outer-name, unused-argument
     # Create the database and the database table
     db.drop_all()
