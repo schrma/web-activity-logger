@@ -1,16 +1,11 @@
-import dash
-import dash_core_components as dcc
-import dash_html_components as html
 from dash.dependencies import Input, Output
 
-def create_callbacks(app, Activities):
-    @app.callback(
-        Output('item-graph', 'figure'),
-        [Input('item-graph', 'relayoutData')]
-    )
-    def update_graph(relayoutData):
+
+def create_callbacks(app, activity_class):
+    @app.callback(Output("item-graph", "figure"), [Input("item-graph", "relayout_data")])
+    def update_graph(relayout_data):  # pylint: disable='unused-argument'
         # Fetch data from the Flask-SQLAlchemy database (Item model)
-        items = Activities.query.all()
+        items = activity_class.query.all()
 
         # Create a graph or chart using the data
         # Example: Bar chart of item names and their counts
@@ -18,12 +13,12 @@ def create_callbacks(app, Activities):
         item_counts = [item.value for item in items]
 
         figure = {
-            'data': [
-                {'x': item_names, 'y': item_counts, 'type': 'bar', 'name': 'Items'},
+            "data": [
+                {"x": item_names, "y": item_counts, "type": "bar", "name": "Items"},
             ],
-            'layout': {
-                'title': 'Item Counts',
-            }
+            "layout": {
+                "title": "Item Counts",
+            },
         }
 
         return figure

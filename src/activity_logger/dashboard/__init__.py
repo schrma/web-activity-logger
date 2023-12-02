@@ -28,9 +28,12 @@ def init_dashboard(app: Flask):
     # dash_module.index_string = html_layout
 
     # Create Layout
-    dash_module.layout = html.Div([
-        html.H1("Dashboard"),
-        dcc.Graph(id='item-graph'),])
+    dash_module.layout = html.Div(
+        [
+            html.H1("Dashboard"),
+            dcc.Graph(id="item-graph"),
+        ]
+    )
 
     create_callbacks(dash_module, Activities)
 
