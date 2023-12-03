@@ -36,18 +36,21 @@
                         <li><a class="nav-link" href="#about">About</a></li>
                         <li><a class="nav-link" href="#contact">Contact us</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('core.dash') }}">Dash</a></li>
-                        <li class="nav-item"><a class="nav-link" href="./admin">My Admin</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('users.activities') }}">Activities</a>
                         </li>
                         {% if current_user.is_authenticated %}
+                        {% if current_user.role_id == 1 %}
+                        <li class="nav-item"><a class="nav-link" href="./admin">My Admin</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('users.register') }}">Register</a>
+                        </li>
+                        {% endif %}
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('users.logout') }}">Log Out</a></li>
                         <li class="nav-item">
                             <a class="nav-link disabled"><i class="bi bi-person-circle"></i> {{ current_user.username
                                 }}</a>
                         </li>
+
                         {% else %}
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('users.register') }}">Register</a>
-                        </li>
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('users.login') }}">Log In</a></li>
                         {% endif %}
                     </ul>
