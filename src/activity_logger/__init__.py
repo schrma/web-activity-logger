@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 import sqlalchemy as sa
 from flask import Flask
@@ -54,6 +55,8 @@ def create_app():
 
     with app.app_context():
         register_blueprints(app)
+    app.permanent_session_lifetime = timedelta(days=14)
+
     initialize_admin(app)
     return app
 

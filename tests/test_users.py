@@ -118,7 +118,7 @@ def test___check_activities___default_values___correct_results(
 def test___check_add_activity___sport_entry___availble_in_database(
     test_client, init_database
 ):  # pylint: disable='unused-argument'
-    my_time = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S")
+    my_time = datetime.utcnow().strftime("%Y-%m-%dT%H:%M")
     my_value = 10
 
     test_client.post(

@@ -67,7 +67,8 @@ def login():
 
         # Log in the user
 
-        login_user(user)
+        login_user(user, remember=True)
+
         flash("Logged in successfully.")
 
         # If a user was trying to visit a page that requires a login
