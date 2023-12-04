@@ -73,7 +73,7 @@ class ActivityForm(FlaskForm):
     # Box to select time and date
     time = DateTimeLocalField(
         "Enter the time and date of your activity",
-        format="%Y-%m-%dT%H:%M:%S",
+        format="%Y-%m-%dT%H:%M",
         default=datetime.now,
     )
     # Float field with values
