@@ -4,7 +4,7 @@ import pytest
 
 import activity_logger
 from activity_logger import create_app, db
-from activity_logger.models import build_default_database
+from activity_logger.models.build import build_default_database
 
 
 @pytest.fixture(scope="package")
@@ -39,19 +39,50 @@ def init_database(test_client):  # pylint: disable=redefined-outer-name, unused-
 
 
 @pytest.fixture(scope="function")
-def log_in_default_user(test_client):  # pylint: disable=redefined-outer-name
-    test_client.post("/login", data={"email": "one@one.com", "password": "my_secret"})
+def log_in_admin_user(
+    test_client, init_database
+):  # pylint: disable=redefined-outer-name unused-argument
+    response = test_client.post(
+        "/login", data={"email": "one@one.com", "password": "my_secret"}, follow_redirects=True
+    )
 
-    yield  # this is where the testing happens!
-
-    test_client.get("/logout")
-
-
-@pytest.fixture(scope="function")
-def log_in_second_user(test_client):  # pylint: disable=redefined-outer-name
-    test_client.post("login", data={"email": "patrick@yahoo.com", "password": "FlaskIsTheBest987"})
+    assert b"Logged in successfully." in response.data
 
     yield  # this is where the testing happens!
 
     # Log out the user
     test_client.get("/logout")
+
+
+@pytest.fixture(scope="function")
+def log_in_normal_user(
+    test_client, init_database
+):  # pylint: disable=redefined-outer-name unused-argument
+    response = test_client.post(
+        "login", data={"email": "two@two.com", "password": "my_password"}, follow_redirects=True
+    )
+
+    assert b"Logged in successfully." in response.data
+
+    yield  # this is where the testing happens!
+
+    # Log out the user
+    test_client.get("/logout")
+
+
+@pytest.fixture(scope="function")
+def register_a_person(
+    test_client, init_database
+):  # pylint: disable=redefined-outer-name unused-argument
+    response = test_client.post(
+        "/register",
+        data={
+            "email": "my@my.com",
+            "username": "my",
+            "password": "my_secret",
+            "pass_confirm": "my_secret",
+            "role": 2,
+        },
+        follow_redirects=True,
+    )
+    return response

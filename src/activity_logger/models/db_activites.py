@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from flask_admin.contrib.sqla import ModelView
 from flask_login import UserMixin
 
+from activity_logger.models import BaseUserModelView
 from activity_logger.models.org import User, db
 
 # By inheriting the UserMixin we get access to a lot of built-in attributes
@@ -13,7 +13,7 @@ from activity_logger.models.org import User, db
 # get_id()
 
 
-class UnitTypeView(ModelView):
+class UnitTypeView(BaseUserModelView):
     can_delete = True
     form_columns = ["unit_type"]
     column_list = ["unit_type"]
@@ -32,13 +32,13 @@ class UnitType(db.Model):  # pylint: disable=too-few-public-methods
         return self.unit_type
 
 
-class ActivityTypeView(ModelView):
+class ActivityTypeView(BaseUserModelView):
     can_delete = True
     form_columns = ["activity_type"]
     column_list = ["activity_type"]
 
 
-class ActivitiesView(ModelView):
+class ActivitiesView(BaseUserModelView):
     can_delete = True
     form_columns = ["my_user", "my_activity", "value", "my_unit", "date"]
     column_list = ["my_user", "my_activity", "value", "my_unit", "date"]

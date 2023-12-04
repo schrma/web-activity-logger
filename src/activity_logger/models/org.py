@@ -1,9 +1,10 @@
 from datetime import datetime
 
-from flask_admin.contrib.sqla import ModelView
 from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
+
+from activity_logger.models import BaseAdminModelView
 
 # By inheriting the UserMixin we get access to a lot of built-in attributes
 # which we will be able to call in our views!
@@ -19,7 +20,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 db = SQLAlchemy()
 
 
-class RoleView(ModelView):
+class RoleView(BaseAdminModelView):
     can_delete = False
     form_columns = ["role"]
     column_list = ["role"]
@@ -38,7 +39,7 @@ class Role(db.Model):  # pylint: disable=too-few-public-methods
         return self.role
 
 
-class UserView(ModelView):
+class UserView(BaseAdminModelView):
     can_delete = True
     form_columns = ["username", "email", "role"]
     column_list = ["username", "email", "role"]
