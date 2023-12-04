@@ -74,7 +74,7 @@ class ActivityForm(FlaskForm):
     time = DateTimeLocalField(
         "Enter the time and date of your activity",
         format="%Y-%m-%dT%H:%M",
-        default=datetime.now,
+        default=datetime.today,
     )
     # Float field with values
     value = FloatField(
