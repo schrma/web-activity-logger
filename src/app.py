@@ -1,7 +1,7 @@
 from flask.cli import with_appcontext
 
 from activity_logger import create_app
-from activity_logger.models import build_default_database
+from activity_logger.models.build import build_default_database
 from activity_logger.models.org import db
 
 app = create_app()

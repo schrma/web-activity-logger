@@ -137,19 +137,10 @@ def test___check_add_activity___sport_entry___availble_in_database(
 
 
 def test___register___default_person___default_person_is_in_database(
-    test_client, init_database
+    log_in_admin_user, register_a_person
 ):  # pylint: disable='unused-argument'
-    test_client.post(
-        "/register",
-        data={
-            "email": "my@my.com",
-            "username": "my",
-            "password": "my_secret",
-            "pass_confirm": "my_secret",
-            "role": 2,
-        },
-        follow_redirects=True,
-    )
+    log_in_admin_user  # pylint: disable=pointless-statement
+    register_a_person  # pylint: disable=pointless-statement
 
     user_from_db = User.query.filter_by(username="my").first()
 
