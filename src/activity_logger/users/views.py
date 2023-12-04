@@ -166,6 +166,9 @@ def activities():
         return redirect(
             url_for("users.result", activity=activity, time=time, value=value, unit=unit)
         )
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(f'Error in field "{getattr(form, field).label.text}": {error}', "error")
     # Render the template with the form as an argument
     return render_template("activities.html", form=form)
 
