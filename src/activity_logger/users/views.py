@@ -1,4 +1,6 @@
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from functools import wraps
+
+from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 
 from activity_logger.models.db_activites import Activities, ActivityType, UnitType
@@ -14,7 +16,19 @@ from activity_logger.users.picture_handler import add_profile_pic
 users_blueprint = Blueprint("users", __name__)
 
 
+def admin_required(view_func):
+    @wraps(view_func)
+    def decorated_view(*args, **kwargs):
+        if not current_user.is_authenticated or str(current_user.role) != "Admin":
+            abort(403)  # HTTP status code for Forbidden
+        return view_func(*args, **kwargs)
+
+    return decorated_view
+
+
 @users_blueprint.route("/register", methods=["GET", "POST"])
+@login_required
+@admin_required
 def register():
     form = RegistrationForm()
 
